@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ToolEMZ User Manual</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">ToolEMZ User Manual</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#toolemz-user-manual" id="toc-toolemz-user-manual">ToolEMZ
+User Manual</a>
+<ul>
+<li><a href="#table-of-contents" id="toc-table-of-contents">Table of
+Contents</a></li>
+<li><a href="#introduction" id="toc-introduction">1. Introduction</a>
+<ul>
+<li><a href="#key-capabilities" id="toc-key-capabilities">Key
+Capabilities</a></li>
+</ul></li>
+<li><a href="#supported-file-formats" id="toc-supported-file-formats">2.
+Supported File Formats</a>
+<ul>
+<li><a href="#emz-emz-data-file"
+id="toc-emz-emz-data-file"><code>.emz</code> — EMZ Data File</a></li>
+<li><a href="#emzproj-emz-project-file"
+id="toc-emzproj-emz-project-file"><code>.EMZProj</code> — EMZ Project
+File</a></li>
+<li><a href="#rawemz-.rawemz-raw-emz-data-file"
+id="toc-rawemz-.rawemz-raw-emz-data-file"><code>.rawemz</code> /
+<code>.RAWEMZ</code> — Raw EMZ Data File</a></li>
+</ul></li>
+<li><a href="#getting-started" id="toc-getting-started">3. Getting
+Started</a>
+<ul>
+<li><a href="#opening-a-single-emz-file"
+id="toc-opening-a-single-emz-file">Opening a Single EMZ File</a></li>
+<li><a href="#opening-an-emz-project"
+id="toc-opening-an-emz-project">Opening an EMZ Project</a></li>
+<li><a href="#creating-a-new-emz-project"
+id="toc-creating-a-new-emz-project">Creating a New EMZ Project</a></li>
+</ul></li>
+<li><a href="#main-application-window"
+id="toc-main-application-window">4. Main Application Window</a></li>
+<li><a href="#menu-reference" id="toc-menu-reference">5. Menu
+Reference</a>
+<ul>
+<li><a href="#file-menu" id="toc-file-menu">5.1 File Menu</a></li>
+<li><a href="#tools-menu" id="toc-tools-menu">5.2 Tools Menu</a></li>
+<li><a href="#emz-sensors-menu" id="toc-emz-sensors-menu">5.3 EMZ
+Sensors Menu</a></li>
+<li><a href="#emz-graph-menu" id="toc-emz-graph-menu">5.4 EMZ Graph
+Menu</a></li>
+<li><a href="#emz-live-data-menu" id="toc-emz-live-data-menu">5.5 EMZ
+Live Data Menu</a></li>
+</ul></li>
+<li><a href="#c-scan-viewer" id="toc-c-scan-viewer">6. C-Scan Viewer</a>
+<ul>
+<li><a href="#data-planes" id="toc-data-planes">6.1 Data Planes</a></li>
+<li><a href="#preview-and-zoom" id="toc-preview-and-zoom">6.2 Preview
+and Zoom</a></li>
+<li><a href="#color-settings" id="toc-color-settings">6.3 Color
+Settings</a></li>
+<li><a href="#maxmin-defect-markers" id="toc-maxmin-defect-markers">6.4
+Max/Min Defect Markers</a></li>
+</ul></li>
+<li><a href="#data-viewer-graphs" id="toc-data-viewer-graphs">7. Data
+Viewer &amp; Graphs</a>
+<ul>
+<li><a href="#graph-types" id="toc-graph-types">7.1 Graph Types</a></li>
+<li><a href="#waveform-viewer" id="toc-waveform-viewer">7.2 Waveform
+Viewer</a></li>
+<li><a href="#x-axis-options" id="toc-x-axis-options">7.3 X-Axis
+Options</a></li>
+</ul></li>
+<li><a href="#emz-project-merging-multiple-data-files"
+id="toc-emz-project-merging-multiple-data-files">8. EMZ Project —
+Merging Multiple Data Files</a>
+<ul>
+<li><a href="#overview" id="toc-overview">8.1 Overview</a></li>
+<li><a href="#creating-a-project" id="toc-creating-a-project">8.2
+Creating a Project</a></li>
+<li><a href="#how-merging-works" id="toc-how-merging-works">8.3 How
+Merging Works</a></li>
+</ul></li>
+<li><a href="#pattern-alignment" id="toc-pattern-alignment">9. Pattern
+&amp; Alignment</a>
+<ul>
+<li><a href="#pattern-file" id="toc-pattern-file">9.1 Pattern
+File</a></li>
+<li><a href="#alignment-file" id="toc-alignment-file">9.2 Alignment
+File</a></li>
+<li><a href="#alignment-modes" id="toc-alignment-modes">9.3 Alignment
+Modes</a></li>
+<li><a href="#advanced-alignment-project-level"
+id="toc-advanced-alignment-project-level">9.4 Advanced Alignment
+(Project-Level)</a></li>
+</ul></li>
+<li><a href="#data-conversion-rawemz-emz"
+id="toc-data-conversion-rawemz-emz">10. Data Conversion (RAWEMZ →
+EMZ)</a>
+<ul>
+<li><a href="#single-file-conversion"
+id="toc-single-file-conversion">10.1 Single File Conversion</a></li>
+<li><a href="#batch-conversion" id="toc-batch-conversion">10.2 Batch
+Conversion</a></li>
+<li><a href="#partial-extraction" id="toc-partial-extraction">10.3
+Partial Extraction</a></li>
+<li><a href="#conversion-from-live-data-stream"
+id="toc-conversion-from-live-data-stream">10.4 Conversion from Live Data
+Stream</a></li>
+</ul></li>
+<li><a href="#note-system" id="toc-note-system">11. Note System</a>
+<ul>
+<li><a href="#overview-1" id="toc-overview-1">11.1 Overview</a></li>
+<li><a href="#adding-notes" id="toc-adding-notes">11.2 Adding
+Notes</a></li>
+<li><a href="#adding-welds" id="toc-adding-welds">11.3 Adding
+Welds</a></li>
+<li><a href="#note-table-synchronization"
+id="toc-note-table-synchronization">11.4 Note Table
+Synchronization</a></li>
+<li><a href="#note-properties" id="toc-note-properties">11.5 Note
+Properties</a></li>
+</ul></li>
+<li><a href="#spool-floor-analysis" id="toc-spool-floor-analysis">12.
+Spool Floor Analysis</a>
+<ul>
+<li><a href="#overview-2" id="toc-overview-2">12.1 Overview</a></li>
+<li><a href="#configuration" id="toc-configuration">12.2
+Configuration</a></li>
+<li><a href="#adaptive-thresholding" id="toc-adaptive-thresholding">12.3
+Adaptive Thresholding</a></li>
+</ul></li>
+<li><a href="#calibration" id="toc-calibration">13. Calibration</a>
+<ul>
+<li><a href="#ratio-calibration" id="toc-ratio-calibration">13.1 Ratio
+Calibration</a></li>
+<li><a href="#khz-compensation" id="toc-khz-compensation">13.2 9 kHz
+Compensation</a></li>
+</ul></li>
+<li><a href="#calculation-formula" id="toc-calculation-formula">14.
+Calculation Formula</a></li>
+<li><a href="#filtering-moving-average-median-savitzkygolay"
+id="toc-filtering-moving-average-median-savitzkygolay">15. Filtering
+(Moving Average / Median / Savitzky–Golay)</a>
+<ul>
+<li><a href="#available-filters" id="toc-available-filters">15.1
+Available Filters</a></li>
+<li><a href="#comparison" id="toc-comparison">15.2 Comparison</a></li>
+</ul></li>
+<li><a href="#live-data-display" id="toc-live-data-display">16. Live
+Data Display</a>
+<ul>
+<li><a href="#overview-3" id="toc-overview-3">16.1 Overview</a></li>
+<li><a href="#architecture" id="toc-architecture">16.2
+Architecture</a></li>
+<li><a href="#live-fft-display" id="toc-live-fft-display">16.3 Live FFT
+Display</a></li>
+<li><a href="#features" id="toc-features">16.4 Features</a></li>
+<li><a href="#pc-logging-mode" id="toc-pc-logging-mode">16.5 PC Logging
+Mode</a></li>
+</ul></li>
+<li><a href="#d-pipe-visualization" id="toc-d-pipe-visualization">17. 3D
+Pipe Visualization</a>
+<ul>
+<li><a href="#overview-4" id="toc-overview-4">17.1 Overview</a></li>
+<li><a href="#features-1" id="toc-features-1">17.2 Features</a></li>
+<li><a href="#light-properties" id="toc-light-properties">17.3 Light
+Properties</a></li>
+</ul></li>
+<li><a href="#report-generation" id="toc-report-generation">18. Report
+Generation</a>
+<ul>
+<li><a href="#word-reports" id="toc-word-reports">18.1 Word
+Reports</a></li>
+<li><a href="#dig-up-sheet-generation"
+id="toc-dig-up-sheet-generation">18.2 Dig-Up Sheet Generation</a></li>
+<li><a href="#interactive-reports" id="toc-interactive-reports">18.3
+Interactive Reports</a></li>
+</ul></li>
+<li><a href="#data-download-from-acquisition-hardware"
+id="toc-data-download-from-acquisition-hardware">19. Data Download from
+Acquisition Hardware</a>
+<ul>
+<li><a href="#file-download" id="toc-file-download">19.1 File
+Download</a></li>
+<li><a href="#usb-composite-mode" id="toc-usb-composite-mode">19.2 USB
+Composite Mode</a></li>
+</ul></li>
+<li><a href="#keyboard-mouse-reference"
+id="toc-keyboard-mouse-reference">20. Keyboard &amp; Mouse Reference</a>
+<ul>
+<li><a href="#c-scan-viewer-1" id="toc-c-scan-viewer-1">C-Scan
+Viewer</a></li>
+<li><a href="#waveform-graph-viewer"
+id="toc-waveform-graph-viewer">Waveform / Graph Viewer</a></li>
+</ul></li>
+<li><a href="#appendix-a-file-format-specifications"
+id="toc-appendix-a-file-format-specifications">Appendix A — File Format
+Specifications</a>
+<ul>
+<li><a href="#emz-file-header-structure"
+id="toc-emz-file-header-structure">EMZ File Header Structure</a></li>
+<li><a href="#emz-record-structure-v1.0"
+id="toc-emz-record-structure-v1.0">EMZ Record Structure (V1.0)</a></li>
+<li><a href="#emz-record-structure-v1.1"
+id="toc-emz-record-structure-v1.1">EMZ Record Structure (V1.1)</a></li>
+<li><a href="#emzproj-xml-schema" id="toc-emzproj-xml-schema">EMZProj
+XML Schema</a></li>
+</ul></li>
+<li><a href="#appendix-b-glossary" id="toc-appendix-b-glossary">Appendix
+B — Glossary</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="toolemz-user-manual">ToolEMZ User Manual</h1>
+<p><strong>Dacon Inspection Studio — EMSENZ Data Viewer &amp; Analysis
+Tool</strong></p>
+<p><em>Version: 2026 — English Edition</em></p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol type="1">
+<li><a href="#1-introduction">Introduction</a></li>
+<li><a href="#2-supported-file-formats">Supported File Formats</a></li>
+<li><a href="#3-getting-started">Getting Started</a></li>
+<li><a href="#4-main-application-window">Main Application
+Window</a></li>
+<li><a href="#5-menu-reference">Menu Reference</a></li>
+<li><a href="#6-c-scan-viewer">C-Scan Viewer</a></li>
+<li><a href="#7-data-viewer--graphs">Data Viewer &amp; Graphs</a></li>
+<li><a href="#8-emz-project--merging-multiple-data-files">EMZ Project —
+Merging Multiple Data Files</a></li>
+<li><a href="#9-pattern--alignment">Pattern &amp; Alignment</a></li>
+<li><a href="#10-data-conversion-rawemz--emz">Data Conversion (RAWEMZ →
+EMZ)</a></li>
+<li><a href="#11-note-system">Note System</a></li>
+<li><a href="#12-spool-floor-analysis">Spool Floor Analysis</a></li>
+<li><a href="#13-calibration">Calibration</a></li>
+<li><a href="#14-calculation-formula">Calculation Formula</a></li>
+<li><a
+href="#15-filtering-moving-average--median--savitzkygolay">Filtering
+(Moving Average / Median / Savitzky–Golay)</a></li>
+<li><a href="#16-live-data-display">Live Data Display</a></li>
+<li><a href="#17-3d-pipe-visualization">3D Pipe Visualization</a></li>
+<li><a href="#18-report-generation">Report Generation</a></li>
+<li><a href="#19-data-download-from-acquisition-hardware">Data Download
+from Acquisition Hardware</a></li>
+<li><a href="#20-keyboard--mouse-reference">Keyboard &amp; Mouse
+Reference</a></li>
+<li><a href="#appendix-a--file-format-specifications">Appendix A — File
+Format Specifications</a></li>
+<li><a href="#appendix-b--glossary">Appendix B — Glossary</a></li>
+</ol>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p><strong>ToolEMZ</strong> is the EMSENZ (Electromagnetic Sensing)
+module of the Dacon Inspection Studio application. It provides a
+comprehensive environment for viewing, analysing, and reporting
+electromagnetic inspection data collected by in-line inspection (ILI)
+tools. The tool is designed for pipeline inspection engineers and data
+analysts who work with hardness mapping data.</p>
+<h3 id="key-capabilities">Key Capabilities</h3>
+<ul>
+<li>Open and view <code>.emz</code> single-file data and
+<code>.EMZProj</code> multi-file projects</li>
+<li>Display C-scan heat maps for up to five sensor channels (HV, Ratio,
+V1, V3, V5)</li>
+<li>Convert raw data (<code>.rawemz</code>) to processed EMZ files using
+GPU-accelerated filtering</li>
+<li>Merge data from multiple data loggers (up to 256 channels across 4
+data loggers)</li>
+<li>Apply pattern files and distance-based alignment for sensor
+remapping</li>
+<li>Perform spool floor analysis with adaptive thresholding</li>
+<li>Generate Word reports and dig-up sheets</li>
+<li>View real-time live data from the acquisition hardware</li>
+<li>Render 3D pipe surface models with C-scan textures</li>
+</ul>
+<hr />
+<h2 id="supported-file-formats">2. Supported File Formats</h2>
+<h3 id="emz-emz-data-file"><code>.emz</code> — EMZ Data File</h3>
+<p>The primary processed data format. Each file contains a header
+followed by sequential records:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sample Counter</td>
+<td>UINT32</td>
+<td>Sequential record index</td>
+</tr>
+<tr>
+<td>V1 Amplitude</td>
+<td>UINT16</td>
+<td>1st harmonic (3 kHz)</td>
+</tr>
+<tr>
+<td>V3 Amplitude</td>
+<td>UINT16</td>
+<td>3rd harmonic (9 kHz)</td>
+</tr>
+<tr>
+<td>V5 Amplitude</td>
+<td>UINT16</td>
+<td>5th harmonic (15 kHz) — V1.1 only</td>
+</tr>
+<tr>
+<td>Odometer Counts</td>
+<td>INT32</td>
+<td>Signed odometer values (up to 3 odometers)</td>
+</tr>
+<tr>
+<td>Odometer Phases</td>
+<td>INT16</td>
+<td>Signed phase data</td>
+</tr>
+</tbody>
+</table>
+<p><strong>File versions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Harmonics</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>V1.0</td>
+<td>V1, V3</td>
+<td>3 kHz and 9 kHz</td>
+</tr>
+<tr>
+<td>V1.1</td>
+<td>V1, V3, V5</td>
+<td>3 kHz, 9 kHz, and 15 kHz</td>
+</tr>
+</tbody>
+</table>
+<h3 id="emzproj-emz-project-file"><code>.EMZProj</code> — EMZ Project
+File</h3>
+<p>An XML-based project file that references multiple data files from
+the same inspection run. It logically merges data from several data
+loggers into a single view.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode xml"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Project</span> <span class="ot">FileCount=</span><span class="st">&quot;4&quot;</span>&gt;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">File1</span> <span class="ot">Name=</span><span class="st">&quot;DL1\data.emz&quot;</span> <span class="ot">DelayInSecond=</span><span class="st">&quot;0.0&quot;</span> /&gt;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">File2</span> <span class="ot">Name=</span><span class="st">&quot;DL2\data.emz&quot;</span> <span class="ot">DelayInSecond=</span><span class="st">&quot;0.5&quot;</span> /&gt;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">File3</span> <span class="ot">Name=</span><span class="st">&quot;DL3\data.emz&quot;</span> <span class="ot">DelayInSecond=</span><span class="st">&quot;1.0&quot;</span> /&gt;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">File4</span> <span class="ot">Name=</span><span class="st">&quot;DL4\data.emz&quot;</span> <span class="ot">DelayInSecond=</span><span class="st">&quot;1.5&quot;</span> /&gt;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">Project</span>&gt;</span></code></pre></div>
+<p><strong>Supported file types within a project:</strong>
+<code>.emz</code>, <code>.imu</code>, <code>.db</code>,
+<code>.csv</code>, <code>.txt</code>, <code>.odom</code></p>
+<h3 id="rawemz-.rawemz-raw-emz-data-file"><code>.rawemz</code> /
+<code>.RAWEMZ</code> — Raw EMZ Data File</h3>
+<p>Raw binary data captured directly from the data loggers before signal
+processing. These files are typically very large (hundreds of GB for
+long inspections) and need to be converted to <code>.emz</code> format
+for analysis.</p>
+<hr />
+<h2 id="getting-started">3. Getting Started</h2>
+<h3 id="opening-a-single-emz-file">Opening a Single EMZ File</h3>
+<ol type="1">
+<li>Launch Dacon Inspection Studio.</li>
+<li>Go to <strong>File → Open</strong> and select an <code>.emz</code>
+file.</li>
+<li>The C-scan viewer will load and display the data.</li>
+</ol>
+<h3 id="opening-an-emz-project">Opening an EMZ Project</h3>
+<ol type="1">
+<li>Go to <strong>File → Open</strong> and select an
+<code>.EMZProj</code> file.</li>
+<li>The application loads all referenced data files, merging them into a
+unified view.</li>
+<li>Each file’s delay offset is applied automatically.</li>
+</ol>
+<h3 id="creating-a-new-emz-project">Creating a New EMZ Project</h3>
+<ol type="1">
+<li>Go to <strong>File → New → EMZ Project</strong>.</li>
+<li>Use the toolbar buttons to <strong>Add</strong> EMZ files to the
+project.</li>
+<li>Reorder files using <strong>Up / Down</strong> buttons.</li>
+<li>Set per-file <strong>Delay (seconds)</strong> values for time
+alignment.</li>
+<li><strong>Save</strong> the project as an <code>.EMZProj</code>
+file.</li>
+</ol>
+<hr />
+<h2 id="main-application-window">4. Main Application Window</h2>
+<p>The application uses an MDI (Multiple Document Interface) layout.
+When an EMZ file or project is opened, the workspace displays:</p>
+<table>
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 68%" />
+</colgroup>
+<thead>
+<tr>
+<th>Area</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Menu Bar</strong></td>
+<td>File, Tools, EMZ Sensors, View, Window, Help</td>
+</tr>
+<tr>
+<td><strong>Toolbar</strong></td>
+<td>Quick-access buttons for common actions</td>
+</tr>
+<tr>
+<td><strong>C-Scan Preview</strong></td>
+<td>Full-length overview of the pipe data (heat map)</td>
+</tr>
+<tr>
+<td><strong>C-Scan Zoom</strong></td>
+<td>Detailed zoomed view of the selected region</td>
+</tr>
+<tr>
+<td><strong>Plot Scan</strong></td>
+<td>Line plot of signal values at the cursor position</td>
+</tr>
+<tr>
+<td><strong>Graph Panel</strong></td>
+<td>B-scan graphs (odometer, distance, raw signal, HV, tool top)</td>
+</tr>
+<tr>
+<td><strong>Note Table</strong></td>
+<td>Tabular view of annotations and defect markings</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="menu-reference">5. Menu Reference</h2>
+<h3 id="file-menu">5.1 File Menu</h3>
+<table>
+<thead>
+<tr>
+<th>Menu Item</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>New → EMZ Project</td>
+<td>Create a new <code>.EMZProj</code> project file</td>
+</tr>
+<tr>
+<td>Open</td>
+<td>Open <code>.emz</code> or <code>.EMZProj</code> files</td>
+</tr>
+<tr>
+<td>Save / Save As</td>
+<td>Save the current project</td>
+</tr>
+<tr>
+<td>Exit</td>
+<td>Close the application</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tools-menu">5.2 Tools Menu</h3>
+<table>
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr>
+<th>Menu Item</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EMZ Note File</td>
+<td>Open or create an EMZ note database</td>
+</tr>
+<tr>
+<td>Generate raw EMZ file</td>
+<td>Generate synthetic <code>.rawemz</code> data for testing</td>
+</tr>
+<tr>
+<td>Convert .RAWEMZ to .EMZ</td>
+<td>Convert a single raw file to processed EMZ</td>
+</tr>
+<tr>
+<td>Batch Convert .RAWEMZ to .EMZ</td>
+<td>Batch-convert an entire folder of raw files</td>
+</tr>
+<tr>
+<td>Extract Partial .RAWEMZ</td>
+<td>Extract a time segment from a raw data file</td>
+</tr>
+</tbody>
+</table>
+<h3 id="emz-sensors-menu">5.3 EMZ Sensors Menu</h3>
+<p>This is the primary menu for data interaction and is available when
+an EMZ file is open.</p>
+<table>
+<thead>
+<tr>
+<th>Menu Item</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sensors</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>HV</td>
+<td>Display Hardness Value (calculated)</td>
+</tr>
+<tr>
+<td>Ratio</td>
+<td>Display V3/V1 ratio</td>
+</tr>
+<tr>
+<td>V3</td>
+<td>Display 3rd harmonic (9 kHz) amplitude</td>
+</tr>
+<tr>
+<td>V1</td>
+<td>Display 1st harmonic (3 kHz) amplitude</td>
+</tr>
+<tr>
+<td>V5</td>
+<td>Display 5th harmonic (15 kHz) amplitude</td>
+</tr>
+<tr>
+<td><strong>Mouse Mode</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Normal</td>
+<td>Standard navigation mode</td>
+</tr>
+<tr>
+<td>Add Notes</td>
+<td>Click on C-scan to add annotation notes</td>
+</tr>
+<tr>
+<td>Add Welds</td>
+<td>Click on C-scan to mark girth welds</td>
+</tr>
+<tr>
+<td>Hide Channels</td>
+<td>Click channels on C-scan to hide them</td>
+</tr>
+<tr>
+<td><strong>X-Axis Value</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Time</td>
+<td>Display time on the horizontal axis</td>
+</tr>
+<tr>
+<td>Index</td>
+<td>Display sample index on the horizontal axis</td>
+</tr>
+<tr>
+<td>Odometer 1–3</td>
+<td>Display odometer distance on the horizontal axis</td>
+</tr>
+<tr>
+<td><strong>View Options</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Properties</td>
+<td>Open the C-scan properties dialog</td>
+</tr>
+<tr>
+<td>Super Sample</td>
+<td>Enable super-sampling for smoother rendering</td>
+</tr>
+<tr>
+<td>Enable Max/Min</td>
+<td>Show maximum and minimum defect markers on C-scan</td>
+</tr>
+</tbody>
+</table>
+<h3 id="emz-graph-menu">5.4 EMZ Graph Menu</h3>
+<table>
+<thead>
+<tr>
+<th>Menu Item</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Display Odo Line — Odo 0</td>
+<td>Show unified odometer graph</td>
+</tr>
+<tr>
+<td>Display Odo Line — Odo 1</td>
+<td>Show odometer 1 graph</td>
+</tr>
+<tr>
+<td>Display Odo Line — Odo 2</td>
+<td>Show odometer 2 graph</td>
+</tr>
+<tr>
+<td>Display Odo Line — Odo 3</td>
+<td>Show odometer 3 graph</td>
+</tr>
+</tbody>
+</table>
+<h3 id="emz-live-data-menu">5.5 EMZ Live Data Menu</h3>
+<table>
+<thead>
+<tr>
+<th>Menu Item</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Light Properties</td>
+<td>Adjust 3D lighting parameters</td>
+</tr>
+<tr>
+<td>Parameter</td>
+<td>Configure live data parameters</td>
+</tr>
+<tr>
+<td>Exit</td>
+<td>Close the live data view</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="c-scan-viewer">6. C-Scan Viewer</h2>
+<p>The C-scan viewer is the central component of ToolEMZ. It provides a
+colour-coded heat map of sensor data across the pipe circumference
+(vertical axis) and along the pipe length (horizontal axis).</p>
+<h3 id="data-planes">6.1 Data Planes</h3>
+<p>The C-scan can display five data planes, each representing a
+different aspect of the electromagnetic measurement:</p>
+<table>
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 34%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr>
+<th>Data Plane</th>
+<th>Matrix Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HV</td>
+<td>matHV</td>
+<td>Hardness Value — calculated from harmonic ratio and calibration</td>
+</tr>
+<tr>
+<td>Ratio</td>
+<td>matRatio</td>
+<td>V3/V1 ratio — primary indicator of material hardness</td>
+</tr>
+<tr>
+<td>V1</td>
+<td>matV1</td>
+<td>1st harmonic amplitude (3 kHz fundamental)</td>
+</tr>
+<tr>
+<td>V3</td>
+<td>matV3</td>
+<td>3rd harmonic amplitude (9 kHz)</td>
+</tr>
+<tr>
+<td>V5</td>
+<td>matV5</td>
+<td>5th harmonic amplitude (15 kHz) — requires V1.1 file format</td>
+</tr>
+</tbody>
+</table>
+<h3 id="preview-and-zoom">6.2 Preview and Zoom</h3>
+<p>The viewer operates in two modes:</p>
+<ul>
+<li><strong>Preview Mode</strong> — Displays the full pipe length. A
+navigation rectangle (box widget) allows you to select the region to
+zoom into.</li>
+<li><strong>Zoom Mode</strong> — Displays the selected region in detail
+with crosshair cursor for precise data reading.</li>
+</ul>
+<p>The crosshair uses a dedicated overlay renderer for smooth,
+responsive tracking without re-rendering the entire chart.</p>
+<blockquote>
+<p><em>PR #531: Improved crosshair responsiveness with overlay renderer
+— crosshair actors are rendered in the overlay layer for fast, smooth
+updates without re-rendering the main chart.</em></p>
+</blockquote>
+<p><img src="images/fig_06_01_box_widget.png"
+alt="Box Widget for zoom navigation (PR #333)" /> <em>Figure 6.1 — Box
+widget for zoom navigation in the C-scan preview.</em></p>
+<h3 id="color-settings">6.3 Color Settings</h3>
+<p>Each data plane can have its own color table. Available color options
+include:</p>
+<ul>
+<li><strong>RGB (Red-Green-Blue)</strong> gradient</li>
+<li><strong>Inverted</strong> color scales</li>
+<li><strong>Custom min/max range</strong> adjustment</li>
+<li><strong>Resolution</strong> control for color quantization</li>
+</ul>
+<p>Color settings are accessible via <strong>EMZ Sensors →
+Properties</strong> or the C-scan properties dialog.</p>
+<h3 id="maxmin-defect-markers">6.4 Max/Min Defect Markers</h3>
+<p>When <strong>Enable Max/Min</strong> is active, the viewer highlights
+the maximum and minimum values within the visible region, helping
+analysts quickly locate potential defects.</p>
+<p><img src="images/fig_06_02_max_min_defect.png"
+alt="Max/Min defect display (PR #497)" /> <em>Figure 6.2 — Max/Min
+defect markers displayed on the C-scan.</em></p>
+<hr />
+<h2 id="data-viewer-graphs">7. Data Viewer &amp; Graphs</h2>
+<h3 id="graph-types">7.1 Graph Types</h3>
+<p>The data viewer supports six graph types displayed below the
+C-scan:</p>
+<table>
+<thead>
+<tr>
+<th>Graph</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Odometer Count</td>
+<td>Raw odometer encoder counts (signed)</td>
+</tr>
+<tr>
+<td>Odometer Angle</td>
+<td>Phase angle of the odometer</td>
+</tr>
+<tr>
+<td>Distance</td>
+<td>Calculated distance from odometer data</td>
+</tr>
+<tr>
+<td>Raw Signal</td>
+<td>Unprocessed waveform from the sensor</td>
+</tr>
+<tr>
+<td>Hardness Value</td>
+<td>Computed HV along the pipe length</td>
+</tr>
+<tr>
+<td>Tool Top</td>
+<td>Tool orientation data from IMU</td>
+</tr>
+</tbody>
+</table>
+<h3 id="waveform-viewer">7.2 Waveform Viewer</h3>
+<p>The waveform viewer provides an A-scan display at the cursor
+position. Zoom controls:</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Left-Click + Vertical Drag</td>
+<td>Zoom Y-axis</td>
+</tr>
+<tr>
+<td>Left-Click + Horizontal Drag</td>
+<td>Zoom X-axis</td>
+</tr>
+<tr>
+<td>Right-Click + Drag</td>
+<td>Pan the view</td>
+</tr>
+<tr>
+<td>Right-Click (no drag)</td>
+<td>Reset zoom to full range</td>
+</tr>
+</tbody>
+</table>
+<h3 id="x-axis-options">7.3 X-Axis Options</h3>
+<p>The horizontal axis can be switched between:</p>
+<ul>
+<li><strong>Time</strong> — absolute time from start of inspection</li>
+<li><strong>Sample Index</strong> — sequential record number</li>
+<li><strong>Odometer 1 / 2 / 3</strong> — distance from individual
+odometers</li>
+<li><strong>Odometer 0 (Unified)</strong> — combined odometer using the
+most reliable reading per interval</li>
+</ul>
+<blockquote>
+<p>The unified odometer selects the highest-change reading per 1-second
+interval across all three odometers to handle mechanical vibration,
+slippage, and bend effects.</p>
+</blockquote>
+<hr />
+<h2 id="emz-project-merging-multiple-data-files">8. EMZ Project —
+Merging Multiple Data Files</h2>
+<h3 id="overview">8.1 Overview</h3>
+<p>A typical EMSENZ ILI tool uses multiple data loggers (up to 4), each
+capturing 64 channels. The EMZ Project feature merges these data sources
+into a single logical view of up to 256 channels.</p>
+<h3 id="creating-a-project">8.2 Creating a Project</h3>
+<ol type="1">
+<li><strong>File → New → EMZ Project</strong> opens the project
+dialog.</li>
+<li>Use the toolbar buttons:
+<ul>
+<li><strong>Add</strong> — Browse and add <code>.emz</code> files</li>
+<li><strong>Delete</strong> — Remove selected file</li>
+<li><strong>Up / Down</strong> — Reorder files</li>
+</ul></li>
+<li>Set the <strong>Delay (seconds)</strong> for each file to compensate
+for data logger synchronization offsets.</li>
+<li><strong>Save</strong> the project.</li>
+</ol>
+<h3 id="how-merging-works">8.3 How Merging Works</h3>
+<ul>
+<li>Each file in the project is loaded by a separate data access
+thread.</li>
+<li>Records are merged using the configured delay offsets.</li>
+<li>The firmware version is validated across all files to ensure
+compatibility.</li>
+<li>The total record count is determined by the file with the maximum
+records.</li>
+</ul>
+<p><img src="images/fig_08_01_single_file.png"
+alt="Single file view (PR #512)" /> <em>Figure 8.1 — Single EMZ file
+displayed in C-scan viewer.</em></p>
+<p><img src="images/fig_08_02_merged_multi_file.png"
+alt="Merged multi-file view (PR #512)" /> <em>Figure 8.2 — Multiple EMZ
+files merged via pattern file, showing all data loggers
+combined.</em></p>
+<hr />
+<h2 id="pattern-alignment">9. Pattern &amp; Alignment</h2>
+<h3 id="pattern-file">9.1 Pattern File</h3>
+<p>The pattern file defines the physical arrangement of sensor coils
+across multiple data loggers. Because coils from different data loggers
+are interleaved on the tool body, the pattern file remaps channels to
+their correct circumferential position.</p>
+<p><strong>Access:</strong> Open via the C-scan properties dialog →
+<strong>Pattern</strong> tab, or via <strong>EMZ Sensors →
+Properties</strong>.</p>
+<h3 id="alignment-file">9.2 Alignment File</h3>
+<p>The alignment file specifies the axial distance offset for each
+channel. This compensates for the fact that sensor coils are not all at
+the same longitudinal position on the tool.</p>
+<p><strong>Example alignment values:</strong></p>
+<pre><code>0, 0.3, 0.6, 0.9, 0, 0.3, 0.6, 0.9, ...</code></pre>
+<p>Each value (in metres) represents how far forward or backward each
+channel’s data should be shifted.</p>
+<h3 id="alignment-modes">9.3 Alignment Modes</h3>
+<p>Two alignment modes are available:</p>
+<ul>
+<li><strong>Alignment by Distance</strong> — Uses odometer distance data
+for precise spatial alignment</li>
+<li><strong>Alignment by Time</strong> — Uses timestamp data for
+temporal alignment</li>
+</ul>
+<p><img src="images/fig_09_01_dl1_default.png"
+alt="Merge DL1 default (PR #448)" /> <em>Figure 9.1 — Data Logger 1 data
+before alignment.</em></p>
+<p><img src="images/fig_09_02_dl1_aligned.png"
+alt="DL1 with alignment file applied (PR #448)" /> <em>Figure 9.2 — Data
+Logger 1 data after applying alignment file with distance
+offsets.</em></p>
+<p><img src="images/fig_09_03_all_dl_default.png"
+alt="Merge DL1 + DL2 + DL3 + DL4 default (PR #448)" /> <em>Figure 9.3 —
+Four data loggers merged without alignment.</em></p>
+<p><img src="images/fig_09_04_all_dl_aligned.png"
+alt="All DLs with alignment applied (PR #448)" /> <em>Figure 9.4 — Four
+data loggers merged with alignment file applied.</em></p>
+<h3 id="advanced-alignment-project-level">9.4 Advanced Alignment
+(Project-Level)</h3>
+<p>When working with EMZ projects, alignment can be applied at the
+project level:</p>
+<p><img src="images/fig_09_05_project_merge.png"
+alt="Merge DL1 + DL4 in project (PR #540)" /> <em>Figure 9.5 — Project
+view: DL1 + DL4 merged.</em></p>
+<p><img src="images/fig_09_06_align_by_distance.png"
+alt="Apply alignment by distance (PR #540)" /> <em>Figure 9.6 —
+Alignment by distance applied to the project.</em></p>
+<p><img src="images/fig_09_07_align_by_time.png"
+alt="Apply alignment by time (PR #540)" /> <em>Figure 9.7 — Alignment by
+time applied to the project.</em></p>
+<p><img src="images/fig_09_08_align_settings.png"
+alt="Alignment settings dialog (PR #540)" /> <em>Figure 9.8 — Alignment
+settings dialog.</em></p>
+<hr />
+<h2 id="data-conversion-rawemz-emz">10. Data Conversion (RAWEMZ →
+EMZ)</h2>
+<h3 id="single-file-conversion">10.1 Single File Conversion</h3>
+<p><strong>Access:</strong> Tools → Convert .RAWEMZ to .EMZ</p>
+<p>The conversion dialog allows you to:</p>
+<ol type="1">
+<li>Select the input <code>.rawemz</code> file</li>
+<li>Choose the output axial sampling frequency: <strong>500 Hz, 1 kHz, 2
+kHz, or 5 kHz</strong></li>
+<li>Select the conversion mode:
+<ul>
+<li><strong>Legacy (FFT)</strong> — Standard Fast Fourier Transform
+processing</li>
+<li><strong>GPU FIR Overlapping</strong> — CUDA-accelerated FIR
+filtering (requires NVIDIA GPU)</li>
+</ul></li>
+<li>Start the conversion</li>
+</ol>
+<p><strong>Performance:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>1-hour inspection</th>
+<th>Data Reduction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Legacy FFT</td>
+<td>~30 seconds</td>
+<td>~94%</td>
+</tr>
+<tr>
+<td>GPU FIR</td>
+<td>~20–30 seconds</td>
+<td>~96%</td>
+</tr>
+</tbody>
+</table>
+<p>The GPU FIR method uses CUDA for parallel processing with a
+unity-gain narrow-band bandpass FIR filter and Blackman windowing to
+minimize harmonic ratio errors.</p>
+<h3 id="batch-conversion">10.2 Batch Conversion</h3>
+<p><strong>Access:</strong> Tools → Batch Convert .RAWEMZ to .EMZ</p>
+<ol type="1">
+<li>Select a folder containing multiple <code>.rawemz</code> files.</li>
+<li>Define the output sampling frequency.</li>
+<li>The conversion runs as a job queue, processing files
+sequentially.</li>
+</ol>
+<h3 id="partial-extraction">10.3 Partial Extraction</h3>
+<p><strong>Access:</strong> Tools → Extract Partial .RAWEMZ</p>
+<p>Extracts a time segment from a large <code>.rawemz</code> file,
+useful for isolating specific sections of an inspection run for detailed
+analysis.</p>
+<h3 id="conversion-from-live-data-stream">10.4 Conversion from Live Data
+Stream</h3>
+<p>When the live data stream is stopped, the application prompts the
+user to convert the recorded <code>.rawemz</code> file to
+<code>.emz</code> format. The conversion runs in a background
+thread.</p>
+<blockquote>
+<p><em>PR #453: After live data streaming stops, the file handle is
+closed properly and the user is prompted to convert .RAWEMZ to .EMZ
+using a background conversion thread.</em></p>
+</blockquote>
+<hr />
+<h2 id="note-system">11. Note System</h2>
+<h3 id="overview-1">11.1 Overview</h3>
+<p>The note system allows analysts to annotate the C-scan with
+observations, defect markings, and weld locations. Notes are stored in a
+database format (SQLite or MS Access).</p>
+<h3 id="adding-notes">11.2 Adding Notes</h3>
+<ol type="1">
+<li>Switch to <strong>Add Notes</strong> mouse mode via EMZ Sensors →
+Mouse Mode → Add Notes.</li>
+<li>Click on the C-scan zoom view to place a note at that location.</li>
+<li>Fill in the note properties in the dialog that appears.</li>
+</ol>
+<h3 id="adding-welds">11.3 Adding Welds</h3>
+<ol type="1">
+<li>Switch to <strong>Add Welds</strong> mode via EMZ Sensors → Mouse
+Mode → Add Welds.</li>
+<li>Click on the C-scan to mark a girth weld location.</li>
+</ol>
+<h3 id="note-table-synchronization">11.4 Note Table Synchronization</h3>
+<p>The note table displays all annotations in a tabular format. It is
+synchronized with the C-scan zoom view — hovering over a note in the
+table highlights it on the C-scan, and vice versa.</p>
+<blockquote>
+<p><em>PR #511: Added synchronization between C-scan zoom and Note
+table. Hovering is supported in the C-scan zoom view (Add Note and Add
+Weld modes operate separately). In the table view, hovering works in all
+modes.</em></p>
+</blockquote>
+<p><img src="images/fig_11_01_note_sync.png"
+alt="Note table synchronization with C-scan (PR #511)" /> <em>Figure
+11.1 — Synchronized note table and C-scan zoom view.</em></p>
+<h3 id="note-properties">11.5 Note Properties</h3>
+<p>Notes contain the following information:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID</td>
+<td>Unique identifier (primary key)</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>ANOM, WELD, COCL, CORR, MIAN, LAMI, CRAL, DENP, etc.</td>
+</tr>
+<tr>
+<td>Location</td>
+<td>Distance and circumferential position</td>
+</tr>
+<tr>
+<td>Dimensions</td>
+<td>Width and length (based on sizing criteria)</td>
+</tr>
+<tr>
+<td>HV Value</td>
+<td>Hardness value at the note location</td>
+</tr>
+<tr>
+<td>Threshold</td>
+<td>Difference threshold used for sizing</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="spool-floor-analysis">12. Spool Floor Analysis</h2>
+<h3 id="overview-2">12.1 Overview</h3>
+<p>Spool floor analysis determines the baseline signal level for each
+pipe section (typically between welds). Defects are then identified as
+deviations above this baseline.</p>
+<h3 id="configuration">12.2 Configuration</h3>
+<p><strong>Access:</strong> EMZ Sensors → Properties → <strong>Spool
+Floor</strong> tab</p>
+<table>
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Threshold (%)</td>
+<td>Percentage above floor value to trigger detection (e.g. 115%)</td>
+</tr>
+<tr>
+<td>Delete Sections</td>
+<td>Remove specific pipe sections from analysis</td>
+</tr>
+<tr>
+<td>Blob Filter</td>
+<td>Filter small blobs by minimum width and length</td>
+</tr>
+<tr>
+<td>Save / Load</td>
+<td>Persist spool floor parameters to file</td>
+</tr>
+</tbody>
+</table>
+<h3 id="adaptive-thresholding">12.3 Adaptive Thresholding</h3>
+<p>The pipeline is divided into sections (by weld position). Each
+section has its own floor value, and the threshold is calculated as a
+percentage of that floor. This adaptive approach handles variations in
+pipe material and wall thickness along the pipeline.</p>
+<hr />
+<h2 id="calibration">13. Calibration</h2>
+<h3 id="ratio-calibration">13.1 Ratio Calibration</h3>
+<p><strong>Access:</strong> EMZ Sensors → Properties →
+<strong>Calibration</strong> tab</p>
+<p>The calibration page allows adjustment of the V1, V3, and V5
+multiplication factors to compensate for non-uniform coil properties.
+After adjusting the values, press <strong>Start Processing</strong> to
+recalculate the C-scan.</p>
+<p><img src="images/fig_13_01_ratio_calibration.png"
+alt="Ratio calibration dialog (PR #498)" /> <em>Figure 13.1 — Ratio
+calibration dialog with V5, V3, and V1 adjustment controls.</em></p>
+<h3 id="khz-compensation">13.2 9 kHz Compensation</h3>
+<p>Available in both manual and automatic modes:</p>
+<ul>
+<li><strong>Manual Mode</strong> — Adjust phase (2048 levels),
+amplitude/digital potentiometer (256 levels), and sine wave table per
+channel.</li>
+<li><strong>Automatic Mode</strong> — Coarse-to-fine optimization
+strategy that tunes all 64 channels in under 1 minute.</li>
+</ul>
+<hr />
+<h2 id="calculation-formula">14. Calculation Formula</h2>
+<p><strong>Access:</strong> EMZ Sensors → Properties → <strong>Calc
+Formula</strong> tab</p>
+<p>The formula property page allows users to define and adjust the
+mathematical formula used to convert raw harmonic data into hardness
+values (HV). The formula rendering uses LaTeX-style display for
+clarity.</p>
+<p><img src="images/fig_14_01_calc_formula.png"
+alt="Calculation formula with LaTeX rendering (PR #481)" /> <em>Figure
+14.1 — Calculation formula property page with LaTeX rendering.</em></p>
+<p>Additional formula options include:</p>
+<ul>
+<li><strong>Show Border</strong> toggle for formula display</li>
+<li>Speed calculation accuracy improvement using sample indices</li>
+<li>Configurable formula parameters for different inspection
+scenarios</li>
+</ul>
+<hr />
+<h2 id="filtering-moving-average-median-savitzkygolay">15. Filtering
+(Moving Average / Median / Savitzky–Golay)</h2>
+<p>ToolEMZ provides several filtering options to improve C-scan
+visualization and reduce noise:</p>
+<h3 id="available-filters">15.1 Available Filters</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 34%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr>
+<th>Filter</th>
+<th>Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Moving Average</td>
+<td>Window size</td>
+<td>Simple sliding window average</td>
+</tr>
+<tr>
+<td>Median</td>
+<td>Window size</td>
+<td>Non-linear filter that preserves edges</td>
+</tr>
+<tr>
+<td>Savitzky–Golay</td>
+<td>Window size, Polynomial order</td>
+<td>Smoothing filter that preserves peaks and valleys</td>
+</tr>
+</tbody>
+</table>
+<h3 id="comparison">15.2 Comparison</h3>
+<p><img src="images/fig_15_01_no_filter.png"
+alt="No filter applied (PR #538)" /> <em>Figure 15.1 — C-scan with no
+filter applied.</em></p>
+<p><img src="images/fig_15_02_moving_average.png"
+alt="Moving average, window size 5 (PR #538)" /> <em>Figure 15.2 —
+Moving average filter (window size = 5).</em></p>
+<p><img src="images/fig_15_03_median_filter.png"
+alt="Median filter, window size 5 (PR #538)" /> <em>Figure 15.3 — Median
+filter (window size = 5).</em></p>
+<p><img src="images/fig_15_04_savitzky_golay.png"
+alt="Savitzky–Golay, window 11, polynomial 3 (PR #538)" /> <em>Figure
+15.4 — Savitzky–Golay filter (window size = 11, polynomial order =
+3).</em></p>
+<hr />
+<h2 id="live-data-display">16. Live Data Display</h2>
+<h3 id="overview-3">16.1 Overview</h3>
+<p>The live data module provides real-time visualization of sensor data
+during inspection. Data is transmitted from the acquisition board to the
+PC via USB 3.0 at 54 kSPS across 64 channels.</p>
+<h3 id="architecture">16.2 Architecture</h3>
+<p>The live data system uses a multi-threaded architecture to prevent UI
+freezing:</p>
+<table>
+<thead>
+<tr>
+<th>Thread</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>USB 3.0 Streaming</td>
+<td>Receives raw data from the hardware</td>
+</tr>
+<tr>
+<td>FFT Calculation</td>
+<td>Computes harmonic amplitudes in real time</td>
+</tr>
+<tr>
+<td>GUI Display</td>
+<td>Updates the live visualization</td>
+</tr>
+</tbody>
+</table>
+<h3 id="live-fft-display">16.3 Live FFT Display</h3>
+<p>The live FFT view shows bar charts for each channel:</p>
+<ul>
+<li><strong>Solid bars</strong> — 1st harmonic (3 kHz) amplitude</li>
+<li><strong>Transparent bars</strong> — 3rd harmonic (9 kHz)
+amplitude</li>
+<li><strong>5th harmonic</strong> (15 kHz) display is also
+supported</li>
+</ul>
+<h3 id="features">16.4 Features</h3>
+<ul>
+<li>Selectable channel zoom — zoom into specific channels</li>
+<li>Adjustable channel min/max range</li>
+<li>Real-time C-scan color display</li>
+<li>Configurable color tables</li>
+<li>Auto-amplitude scan for optimal display range</li>
+<li>Reconnection capability if USB connection is interrupted</li>
+</ul>
+<p><img src="images/fig_16_01_auto_amplitude.png"
+alt="Auto amplitude scan (PR #495)" /> <em>Figure 16.1 — Auto amplitude
+scan re-enabling controls after scan completion.</em></p>
+<h3 id="pc-logging-mode">16.5 PC Logging Mode</h3>
+<p>In PC logging mode, raw sensor data is streamed to the PC and saved
+directly to a <code>.rawemz</code> file. When streaming stops, the user
+is prompted to convert the file to <code>.emz</code> format.</p>
+<hr />
+<h2 id="d-pipe-visualization">17. 3D Pipe Visualization</h2>
+<h3 id="overview-4">17.1 Overview</h3>
+<p>ToolEMZ includes a VTK-based 3D pipe visualization that renders the
+pipeline surface with C-scan data mapped as textures. The 3D path is
+generated from IMU (Inertial Measurement Unit) data.</p>
+<h3 id="features-1">17.2 Features</h3>
+<ul>
+<li>3D surface rendering with actual UT wall thickness profiles</li>
+<li>C-scan texture mapping onto the 3D pipe path</li>
+<li>Adjustable lighting and shadow properties</li>
+<li>3D note visualization — annotations appear at their spatial
+locations</li>
+<li>Pipe tally display in both 2D and 3D views</li>
+<li>Elements displayed: ANOM (anomalies), WELD (girth welds), LOSE
+(longitudinal seam welds)</li>
+</ul>
+<h3 id="light-properties">17.3 Light Properties</h3>
+<p><strong>Access:</strong> EMZ Live Data → Light Properties</p>
+<p>Configure the 3D scene lighting including ambient, diffuse, and
+specular components.</p>
+<hr />
+<h2 id="report-generation">18. Report Generation</h2>
+<h3 id="word-reports">18.1 Word Reports</h3>
+<p>ToolEMZ can generate Microsoft Word reports containing:</p>
+<ul>
+<li>Pipe tally summaries</li>
+<li>C-scan screenshots with annotations</li>
+<li>Graph exports</li>
+<li>Signal screenshots for detailed analysis</li>
+</ul>
+<h3 id="dig-up-sheet-generation">18.2 Dig-Up Sheet Generation</h3>
+<p>Based on user-selected features, the system generates dig-up sheets
+that handle all anomaly types:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>COCL</td>
+<td>Coating Loss</td>
+</tr>
+<tr>
+<td>CORR</td>
+<td>Corrosion</td>
+</tr>
+<tr>
+<td>MIAN</td>
+<td>Mill Anomaly</td>
+</tr>
+<tr>
+<td>LAMI</td>
+<td>Lamination</td>
+</tr>
+<tr>
+<td>CRAL</td>
+<td>Crack-Like</td>
+</tr>
+<tr>
+<td>DENP</td>
+<td>Dent with Profile</td>
+</tr>
+</tbody>
+</table>
+<h3 id="interactive-reports">18.3 Interactive Reports</h3>
+<p>The interactive report system provides:</p>
+<ul>
+<li>Feature filtering by number, category, and string-based
+criteria</li>
+<li>Custom axis controls for scatter, histogram, and line plots</li>
+<li>Navigation: click on note blocks to jump to the anomaly view in the
+C-scan</li>
+<li>Database format: MS Access for compatibility with custom
+forms/reports</li>
+</ul>
+<hr />
+<h2 id="data-download-from-acquisition-hardware">19. Data Download from
+Acquisition Hardware</h2>
+<h3 id="file-download">19.1 File Download</h3>
+<p><strong>Access:</strong> Available through the download interface
+when connected to the acquisition hardware.</p>
+<p>Features:</p>
+<ul>
+<li>Selectable file download from the SD card</li>
+<li>Transfer speed: 40 MB/s via USB 3.0</li>
+<li>Retry and resume capability for large downloads (handles 30+ hour,
+~800 GB operations)</li>
+<li>Progress dialog with estimated time remaining</li>
+</ul>
+<p><img src="images/fig_19_01_multi_download.png"
+alt="Multi-file download interface (PR #428)" /> <em>Figure 19.1 —
+Multi-file download dialog for selecting and transferring data from the
+acquisition hardware.</em></p>
+<h3 id="usb-composite-mode">19.2 USB Composite Mode</h3>
+<p>The data logger can be configured as a USB composite device
+providing:</p>
+<ul>
+<li><strong>Virtual COM Port</strong> — For live data streaming and
+configuration</li>
+<li><strong>USB Drive</strong> — For transferring logged data files</li>
+</ul>
+<hr />
+<h2 id="keyboard-mouse-reference">20. Keyboard &amp; Mouse
+Reference</h2>
+<h3 id="c-scan-viewer-1">C-Scan Viewer</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Left-Click + Drag (in preview)</td>
+<td>Move the navigation rectangle</td>
+</tr>
+<tr>
+<td>Left-Click (in zoom, Normal mode)</td>
+<td>Move crosshair cursor</td>
+</tr>
+<tr>
+<td>Left-Click (in zoom, Add Notes mode)</td>
+<td>Place a new note</td>
+</tr>
+<tr>
+<td>Left-Click (in zoom, Add Welds mode)</td>
+<td>Place a weld marker</td>
+</tr>
+<tr>
+<td>Left-Click (in zoom, Hide Channels mode)</td>
+<td>Toggle channel visibility</td>
+</tr>
+</tbody>
+</table>
+<h3 id="waveform-graph-viewer">Waveform / Graph Viewer</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Left-Click + Vertical Drag</td>
+<td>Zoom Y-axis</td>
+</tr>
+<tr>
+<td>Left-Click + Horizontal Drag</td>
+<td>Zoom X-axis</td>
+</tr>
+<tr>
+<td>Right-Click + Drag</td>
+<td>Pan the view</td>
+</tr>
+<tr>
+<td>Right-Click (no drag)</td>
+<td>Reset zoom to full range</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="appendix-a-file-format-specifications">Appendix A — File Format
+Specifications</h2>
+<h3 id="emz-file-header-structure">EMZ File Header Structure</h3>
+<p>The EMZ file header (10,240 bytes) contains:</p>
+<ul>
+<li>File version identifier</li>
+<li>Firmware version</li>
+<li>Number of channels</li>
+<li>Sampling frequency</li>
+<li>Odometer configuration</li>
+<li>Calibration parameters</li>
+</ul>
+<h3 id="emz-record-structure-v1.0">EMZ Record Structure (V1.0)</h3>
+<table>
+<thead>
+<tr>
+<th>Offset</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>4</td>
+<td>UINT32</td>
+<td>Sample counter</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2</td>
+<td>UINT16</td>
+<td>V1 amplitude</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2</td>
+<td>UINT16</td>
+<td>V3 amplitude</td>
+</tr>
+<tr>
+<td>8</td>
+<td>4×3</td>
+<td>INT32</td>
+<td>Odometer counts (3 odometers)</td>
+</tr>
+<tr>
+<td>20</td>
+<td>2×3</td>
+<td>INT16</td>
+<td>Odometer phases</td>
+</tr>
+</tbody>
+</table>
+<h3 id="emz-record-structure-v1.1">EMZ Record Structure (V1.1)</h3>
+<p>Same as V1.0 with the addition of:</p>
+<table>
+<thead>
+<tr>
+<th>Offset</th>
+<th>Size</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>2</td>
+<td>UINT16</td>
+<td>V5 amplitude</td>
+</tr>
+</tbody>
+</table>
+<h3 id="emzproj-xml-schema">EMZProj XML Schema</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode xml"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;?xml</span> <span class="ot">version=</span><span class="st">&quot;1.0&quot;</span> <span class="ot">encoding=</span><span class="st">&quot;UTF-8&quot;</span><span class="fu">?&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Project</span> <span class="ot">FileCount=</span><span class="st">&quot;N&quot;</span>&gt;</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">File1</span> <span class="ot">Name=</span><span class="st">&quot;relative/path/to/file1.emz&quot;</span> <span class="ot">DelayInSecond=</span><span class="st">&quot;0.0&quot;</span> /&gt;</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">File2</span> <span class="ot">Name=</span><span class="st">&quot;relative/path/to/file2.emz&quot;</span> <span class="ot">DelayInSecond=</span><span class="st">&quot;0.5&quot;</span> /&gt;</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">&lt;!-- ... --&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">FileN</span> <span class="ot">Name=</span><span class="st">&quot;relative/path/to/fileN.emz&quot;</span> <span class="ot">DelayInSecond=</span><span class="st">&quot;X.X&quot;</span> /&gt;</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">Project</span>&gt;</span></code></pre></div>
+<hr />
+<h2 id="appendix-b-glossary">Appendix B — Glossary</h2>
+<table>
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 64%" />
+</colgroup>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A-scan</strong></td>
+<td>Signal waveform at a single point (time domain)</td>
+</tr>
+<tr>
+<td><strong>B-scan</strong></td>
+<td>Cross-sectional signal display along one axis</td>
+</tr>
+<tr>
+<td><strong>C-scan</strong></td>
+<td>Plan-view colour heat map of the full pipe surface</td>
+</tr>
+<tr>
+<td><strong>DL</strong></td>
+<td>Data Logger — hardware unit that captures sensor data</td>
+</tr>
+<tr>
+<td><strong>EMZ</strong></td>
+<td>EMSENZ data format (processed harmonics)</td>
+</tr>
+<tr>
+<td><strong>EMSENZ</strong></td>
+<td>Electromagnetic Sensing — the inspection technology</td>
+</tr>
+<tr>
+<td><strong>FFT</strong></td>
+<td>Fast Fourier Transform — used for harmonic extraction</td>
+</tr>
+<tr>
+<td><strong>FIR</strong></td>
+<td>Finite Impulse Response — filter type used in GPU conversion</td>
+</tr>
+<tr>
+<td><strong>HV</strong></td>
+<td>Hardness Value — derived from harmonic ratio and calibration</td>
+</tr>
+<tr>
+<td><strong>ILI</strong></td>
+<td>In-Line Inspection — pipeline inspection using internal tools</td>
+</tr>
+<tr>
+<td><strong>IMU</strong></td>
+<td>Inertial Measurement Unit — measures tool orientation</td>
+</tr>
+<tr>
+<td><strong>RAWEMZ</strong></td>
+<td>Raw binary data before harmonic extraction</td>
+</tr>
+<tr>
+<td><strong>V1</strong></td>
+<td>1st harmonic amplitude (3 kHz fundamental)</td>
+</tr>
+<tr>
+<td><strong>V3</strong></td>
+<td>3rd harmonic amplitude (9 kHz)</td>
+</tr>
+<tr>
+<td><strong>V5</strong></td>
+<td>5th harmonic amplitude (15 kHz)</td>
+</tr>
+<tr>
+<td><strong>VTK</strong></td>
+<td>Visualization Toolkit — library for 3D rendering</td>
+</tr>
+<tr>
+<td><strong>Spool Floor</strong></td>
+<td>Baseline signal level for a pipe section</td>
+</tr>
+<tr>
+<td><strong>Pattern File</strong></td>
+<td>Defines physical sensor arrangement across data loggers</td>
+</tr>
+<tr>
+<td><strong>Alignment File</strong></td>
+<td>Specifies axial distance offset per channel</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Document generated from the Dacon Inspection Studio codebase,
+pull request history, and EMSENS bi-weekly progress reports.</em></p>
+<p><em>Last updated: March 2026</em></p>
+</body>
+</html>
